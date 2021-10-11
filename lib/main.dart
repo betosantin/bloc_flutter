@@ -29,10 +29,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final bloc = CounterBloc();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      blocs: [Bloc((i) => CounterBloc())],
+      blocs: [Bloc((i) => bloc)],
       dependencies: [],
       child: Scaffold(
         appBar: AppBar(
@@ -46,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'You have pushed the button this many times:',
               ),
               StreamBuilder(
-                stream: BlocProvider.getBloc<CounterBloc>().contador,
+                stream: bloc.contador,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(snapshot.data.toString());
@@ -58,12 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(),
               ElevatedButton(
                 onPressed: () =>
-                    BlocProvider.getBloc<CounterBloc>().incrementar(),
+                    bloc.incrementar(),
                 child: Text('Incrementar'),
               ),
               ElevatedButton(
                 onPressed: () =>
-                    BlocProvider.getBloc<CounterBloc>().decrementar(),
+                    bloc.decrementar(),
                 child: Text('Decrementar'),
               ),
             ],
